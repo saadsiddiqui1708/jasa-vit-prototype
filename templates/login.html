@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card" style="max-width:420px;margin:40px auto;">
+  <h2 style="margin-top:0">Login</h2>
+  <form method="post">
+    <label>Username</label>
+    <input name="username" placeholder="JASA01 / VIT01 / SPORIC01" required>
+    <label>Password</label>
+    <input type="password" name="password" placeholder="123" required>
+    <button class="btn" type="submit">Sign in</button>
+  </form>
+  <p style="color:#64748b;margin-top:8px;">Demo: JASA01 / 123, VIT01 / 123, SPORIC01 / 123</p>
+</div>
+{% endblock %}

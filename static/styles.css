@@ -1,0 +1,118 @@
+:root{
+  --maroon:#7a0019;
+  --gold:#c9a227;
+  --ink:#0f172a;
+  --muted:#64748b;
+  --bg:#f8fafc;
+  --card:#ffffff;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+a{color:var(--maroon);text-decoration:none}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;background:var(--maroon);color:#fff}
+.btn{border:none;border-radius:12px;padding:10px 14px;background:var(--maroon);color:#fff;cursor:pointer}
+.btn.gold{background:var(--gold);color:#000}
+.btn.ghost{background:#fff;color:var(--maroon);border:1px solid var(--maroon)}
+.container{max-width:1100px;margin:20px auto;padding:0 16px}
+.card{background:var(--card);border-radius:16px;box-shadow:0 6px 20px rgba(0,0,0,0.06);padding:16px;margin-bottom:16px}
+.grid{display:grid;gap:16px}
+.grid.cols-2{grid-template-columns:1fr 1fr}
+.grid.cols-3{grid-template-columns:repeat(3,1fr)}
+label{font-weight:600;display:block;margin-bottom:6px}
+input,select,textarea{width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:12px;margin-bottom:12px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px;border-bottom:1px solid #e5e7eb;text-align:left}
+.badge{display:inline-block;padding:4px 8px;border-radius:999px;background:#eef2ff;color:#312e81;font-size:12px}
+.score{font-weight:700}
+.flash{padding:10px 14px;border-radius:10px;margin:10px 0}
+.flash.success{background:#ecfdf5;color:#065f46}
+.flash.error{background:#fef2f2;color:#991b1b}
+.flash.info{background:#eff6ff;color:#1e40af}
+.footer{padding:20px;text-align:center;color:var(--muted)}
+/* --- Interview table alignment helpers --- */
+.table-fixed { table-layout: fixed; width: 100%; }
+.table-fixed th, .table-fixed td { vertical-align: middle; }
+
+.nowrap { white-space: nowrap; }
+
+.col-id { width: 60px; }
+.col-post { width: 240px; }
+.col-stu { width: 260px; }
+.col-status { width: 130px; text-align: center; }
+.col-schedule { width: 260px; }
+.col-notes { width: 260px; }
+.col-action { width: 360px; }
+
+.actions { display: flex; gap: 10px; align-items: center; }
+
+input[type="datetime-local"],
+.notes-input {
+  height: 40px;
+  padding: 8px 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  width: 240px;              /* keeps all rows same width */
+  box-sizing: border-box;
+}
+
+/* make buttons same height as inputs */
+.btn, .btn.gold, .btn.ghost {
+  height: 40px;
+  padding: 0 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+/* ===== Clean grid list for Interview Requests ===== */
+.ir-wrap { background: var(--card); border-radius: 16px; box-shadow: 0 6px 20px rgba(0,0,0,0.06); padding: 16px; }
+.ir-grid { 
+  display: grid; 
+  grid-template-columns: 70px 1.6fr 1.6fr 140px 1.2fr 1.2fr 2fr; 
+  gap: 12px; 
+  align-items: center; 
+}
+.ir-head { font-weight: 700; color: var(--ink); }
+.ir-row { padding: 12px 0; border-top: 1px solid #e5e7eb; }
+.ir-badge { text-align:center; }
+
+.ir-nowrap { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ir-actions { display: flex; gap: 10px; align-items: center; }
+
+.ir-input, .ir-notes, .ir-dt {
+  width: 100%;
+  height: 40px;
+  padding: 8px 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-sizing: border-box;
+}
+
+.btn, .btn.gold, .btn.ghost {
+  height: 40px; 
+  padding: 0 14px; 
+  display: inline-flex; 
+  align-items: center; 
+  justify-content: center;
+}
+
+/* Small screens: stack neatly */
+@media (max-width: 1100px) {
+  .ir-grid { 
+    grid-template-columns: 60px 1fr 1fr 120px 1fr; 
+  }
+  /* Move Notes + Action under the row on small screens */
+  .ir-notes, .ir-actions { grid-column: 2 / -1; }
+}
+/* --- Top Matches card layout --- */
+.tm-head { display:flex; align-items:center; justify-content:space-between; margin:6px 0 2px; }
+.tm-title { font-weight:700; }
+.tm-meta { font-size:12px; color:var(--muted); }
+
+.tm-table { table-layout: fixed; width:100%; }
+.tm-table th, .tm-table td { vertical-align: middle; }
+
+.tm-col-reg { width: 40%; }
+.tm-col-jp  { width: 30%; }
+.tm-col-score { width: 30%; text-align:right; }
+
+.tm-div { border-top:1px solid #e5e7eb; margin:10px 0 14px; }

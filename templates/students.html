@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h3 style="margin-top:0">Student Database (VIT Admin)</h3>
+  <table>
+    <tr>
+      <th>Name</th><th>Reg No</th><th>Degree</th><th>Branch</th><th>Japanese</th><th>Skills</th><th>Softwares</th>
+    </tr>
+    {% for s in students %}
+    <tr>
+      <td>{{ s.name }}</td>
+      <td>{{ s.regNo }}</td>
+      <td>{{ s.degreeLevel }}</td>
+      <td>{{ s.branch }}</td>
+      <td>{{ s.japanese }}</td>
+      <td>
+        {% for k,v in s.skills.items() %}<span class="badge">{{ k }}: {{ v }}</span> {% endfor %}
+      </td>
+      <td>
+        {% for k,v in s.softwares.items() %}<span class="badge">{{ k }}: {{ v }}</span> {% endfor %}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

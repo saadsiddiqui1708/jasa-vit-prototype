@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h3 style="margin-top:0">Create Posting</h3>
+  <form method="post">
+    <label>Type</label>
+    <select name="type" required>
+      <option value="INTERNSHIP">Internship</option>
+      <option value="VACANCY">Vacancy</option>
+      <option value="RESEARCH">Research</option>
+    </select>
+
+    <label>Title</label>
+    <input name="title" required>
+
+    <label>Description</label>
+    <textarea name="description" rows="4"></textarea>
+
+    <div class="grid cols-3">
+      <div>
+        <label>Location</label>
+        <input name="location" placeholder="Chennai">
+      </div>
+      <div>
+        <label>Duration (Internship)</label>
+        <input name="duration" placeholder="e.g., 3 months">
+      </div>
+      <div>
+        <label>Stipend (₹/mo)</label>
+        <input name="stipend" type="number" min="0" placeholder="15000">
+      </div>
+    </div>
+
+    <div class="grid cols-3">
+      <div>
+        <label>Compensation (Vacancy)</label>
+        <input name="compensation" placeholder="₹5–6 LPA">
+      </div>
+      <div>
+        <label>Eligibility</label>
+        <input name="eligibility" placeholder="Undergrad CSE/IT/DS">
+      </div>
+      <div>
+        <label>Experience</label>
+        <input name="experience" placeholder="0–1 yrs">
+      </div>
+    </div>
+
+    <label>Research Area (for Research)</label>
+    <input name="researchArea" placeholder="AI/ML, Power Systems, etc.">
+
+    <label>Required Skills (comma separated)</label>
+    <input name="requiredSkills" placeholder="python, sql, excel">
+
+    <label>Minimum Japanese level</label>
+    <select name="requiredJapanese">
+      <option>NONE</option><option>N5</option><option>N4</option>
+      <option>N3</option><option>N2</option><option>N1</option>
+    </select>
+
+    <button class="btn" type="submit">Create</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h3 style="margin-top:0">Interview Requests (VIT Admin)</h3>
+  <div class="ir-wrap">
+  <div class="ir-grid ir-head" style="padding: 6px 0;">
+    <div>ID</div>
+    <div>Posting</div>
+    <div>Student</div>
+    <div class="ir-badge">Status</div>
+    <div>Schedule</div>
+    <div>Notes</div>
+    <div>Action</div>
+  </div>
+
+  {% for row in rows %}
+    <div class="ir-grid ir-row">
+      <div>{{ row.r.id }}</div>
+      <div>{{ row.posting.title }}</div>
+      <div class="ir-nowrap">{{ row.student.name }} ({{ row.student.regNo }})</div>
+      <div class="ir-badge"><span class="badge">{{ row.r.status }}</span></div>
+
+      <div>{{ row.r.scheduledAt or "-" }}</div>
+      <div>{{ row.r.notes or "-" }}</div>
+
+      <div>
+        <form method="post" class="ir-actions">
+          <input type="hidden" name="id" value="{{ row.r.id }}">
+          <input name="scheduledAt" class="ir-dt" type="datetime-local" placeholder="dd-mm-yyyy  --:--">
+          <input name="notes" class="ir-notes" placeholder="Notes…">
+          <button class="btn" name="action" value="approve" type="submit">Approve</button>
+          <button class="btn ghost" name="action" value="decline" type="submit">Decline</button>
+          <button class="btn gold" name="action" value="schedule" type="submit">Schedule</button>
+        </form>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+
+</div>
+{% endblock %}

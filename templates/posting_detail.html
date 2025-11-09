@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h3 style="margin-top:0">{{ post.title }} <span class="badge">{{ post.type }}</span></h3>
+  <p>{{ post.description }}</p>
+  <div class="grid cols-3">
+    <div><strong>Location:</strong> {{ post.location or "-" }}</div>
+    <div><strong>Duration:</strong> {{ post.duration or "-" }}</div>
+    <div><strong>Stipend:</strong> {{ post.stipend or "-" }}</div>
+    <div><strong>Compensation:</strong> {{ post.compensation or "-" }}</div>
+    <div><strong>Eligibility:</strong> {{ post.eligibility or "-" }}</div>
+    <div><strong>Experience:</strong> {{ post.experience or "-" }}</div>
+    <div><strong>Research Area:</strong> {{ post.researchArea or "-" }}</div>
+    <div><strong>Required Skills:</strong> {{ post.requiredSkills|join(", ") if post.requiredSkills else "-" }}</div>
+    <div><strong>Min Japanese:</strong> {{ post.requiredJapanese or "NONE" }}</div>
+  </div>
+</div>
+
+{% if role == "JASA_USER" and post.type != "RESEARCH" %}
+<div class="card">
+  <h3 style="margin-top:0">Top Matches</h3>
+  {% if post.matches %}
+    <form method="post" action="{{ url_for('request_interviews', posting_id=post.id) }}">
+      <table>
+        <tr><th>Select</th><th>Student</th><th>Reg No</th><th>Japanese</th><th>Score</th></tr>
+        {% for m in post.matches %}
+          <tr>
+            <td><input type="checkbox" name="student_id" value="{{ m.student.id }}"></td>
+            <td>{{ m.student.name }}</td>
+            <td>{{ m.student.regNo }}</td>
+            <td>{{ m.student.japanese }}</td>
+            <td class="score">{{ m.score }}</td>
+          </tr>
+        {% endfor %}
+      </table>
+      <button class="btn gold" type="submit">Request Interviews</button>
+    </form>
+  {% else %}
+    <p>No matches yet.</p>
+  {% endif %}
+</div>
+{% endif %}
+{% endblock %}

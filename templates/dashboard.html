@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% if role == "JASA_USER" %}
+  <div class="grid cols-2">
+    <div class="card">
+      <h3 style="margin-top:0">Your Postings</h3>
+      <a class="btn gold" href="{{ url_for('new_posting') }}">+ New Posting</a>
+      <table style="margin-top:10px">
+        <tr><th>Type</th><th>Title</th><th>Created</th><th></th></tr>
+        {% for p in postings %}
+        <tr>
+          <td><span class="badge">{{ p.type }}</span></td>
+          <td>{{ p.title }}</td>
+          <td>{{ p.createdAt.strftime("%d %b %Y %H:%M") }}</td>
+          <td><a href="{{ url_for('posting_detail', posting_id=p.id) }}">Open</a></td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0">Notifications</h3>
+      <p>No personal notifications in this minimal demo. Interview status changes will appear to Admin.</p>
+    </div>
+  </div>
+
+  <!-- Top matches as its own card (not nested) -->
+  <div class="card">
+  <div class="tm-head">
+    <h3 class="tm-title" style="margin:0;">Top Matches Across Your Posts</h3>
+    <span class="tm-meta">Reg No • Japanese • Score</span>
+  </div>
+
+  {% if matches_rollup and matches_rollup|length > 0 %}
+    {% for row in matches_rollup %}
+      <div style="display:flex;align-items:center;gap:8px;margin-top:8px;">
+        <div style="font-weight:700;">{{ row.post.title }}</div>
+        <span class="badge">{{ row.post.type }}</span>
+        <a style="margin-left:8px" href="{{ url_for('posting_detail', posting_id=row.post.id) }}">(open)</a>
+      </div>
+
+      <table class="tm-table">
+        <tr>
+          <th class="tm-col-reg">Reg No</th>
+          <th class="tm-col-jp">Japanese</th>
+          <th class="tm-col-score">Score</th>
+        </tr>
+        {% for m in row.top %}
+          <tr>
+            <td class="tm-col-reg">{{ m.student.regNo }}</td>
+            <td class="tm-col-jp">{{ m.student.japanese }}</td>
+            <td class="tm-col-score score">{{ m.score }}</td>
+          </tr>
+        {% endfor %}
+      </table>
+      <div class="tm-div"></div>
+    {% endfor %}
+  {% else %}
+    <p>No matches yet. Create an Internship/Vacancy with required skills to see auto-matching here.</p>
+  {% endif %}
+</div>
+
+
+{% elif role == "VIT_ADMIN" %}
+  <div class="grid cols-2">
+    <div class="card">
+      <h3 style="margin-top:0">All Postings</h3>
+      <table>
+        <tr><th>Type</th><th>Title</th><th></th></tr>
+        {% for p in postings %}
+          <tr>
+            <td><span class="badge">{{ p.type }}</span></td>
+            <td>{{ p.title }}</td>
+            <td><a href="{{ url_for('posting_detail', posting_id=p.id) }}">Open</a></td>
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0">Admin Panel</h3>
+      <p>
+        <a class="btn" href="{{ url_for('list_students') }}">Student Database</a>
+        <a class="btn ghost" href="{{ url_for('manage_interviews') }}">Interview Requests</a>
+      </p>
+      <p>
+        Unread notifications: <strong>{{ unread_count }}</strong>
+        <a href="{{ url_for('mark_all_read') }}">Mark all read</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- Upcoming interviews card -->
+  <div class="card">
+    <h3 style="margin-top:0">Upcoming Interviews</h3>
+    {% if upcoming and upcoming|length > 0 %}
+      <table>
+        <tr><th>Date/Time</th><th>Posting</th><th>Student</th><th>Status</th></tr>
+        {% for row in upcoming %}
+          <tr>
+            <td>{{ row.r.scheduledAt }}</td>
+            <td>{{ row.posting.title }}</td>
+            <td>{{ row.student.name }} ({{ row.student.regNo }})</td>
+            <td><span class="badge">{{ row.r.status }}</span></td>
+          </tr>
+        {% endfor %}
+      </table>
+      <p style="margin-top:8px;">
+        <a class="btn ghost" href="{{ url_for('manage_interviews') }}">Manage</a>
+      </p>
+    {% else %}
+      <p>No interviews scheduled yet.</p>
+    {% endif %}
+  </div>
+
+{% elif role == "SPORIC" %}
+  <div class="card">
+    <h3 style="margin-top:0">Research Feed</h3>
+    <table>
+      <tr><th>Title</th><th>Area</th><th></th></tr>
+      {% for p in research %}
+        <tr>
+          <td>{{ p.title }}</td>
+          <td>{{ p.researchArea or "-" }}</td>
+          <td>
+            <a href="{{ url_for('posting_detail', posting_id=p.id) }}">Open</a>
+            <form style="display:inline" method="post" action="{{ url_for('research_interest', posting_id=p.id) }}">
+              <button class="btn gold" type="submit">Interested</button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+  </div>
+{% endif %}
+
+{% endblock %}
